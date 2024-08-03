@@ -1,0 +1,10 @@
+{
+  "colors": ["Red", "Blue", "Black", "White", "Green"],
+  "gender": ["Men", "Women"],
+  "price": [
+    ["0-250", "Rs: 0 to 250"],
+    ["251-450", "Rs: 251 to Rs450"],
+    ["450-1000", "Rs: 450 & Above"]
+  ],
+  "type": ["Polo", "Hoodie", "Basic"]
+}
