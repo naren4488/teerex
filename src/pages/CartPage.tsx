@@ -30,10 +30,11 @@ const CartPage = () => {
         setCartItems(cartItemsArr);
         const total = totalAmount + cartItem.price;
         setTotalAmount(total);
+        localStorage.setItem("cartItems", JSON.stringify(cartItemsArr));
       }
     } else {
       if (cartItem.quantityInCart === 1) {
-        alert("Can not decrease further");
+        deleteItem(cartItem.id);
       } else {
         const cartItemsArr: CartItem[] = JSON.parse(JSON.stringify(cartItems));
         const index = cartItemsArr.findIndex((item) => item.id === cartItem.id);
@@ -41,8 +42,18 @@ const CartPage = () => {
         setCartItems(cartItemsArr);
         const total = totalAmount - cartItem.price;
         setTotalAmount(total);
+        localStorage.setItem("cartItems", JSON.stringify(cartItemsArr));
       }
     }
+  };
+
+  const deleteItem = (id: number) => {
+    console.log(id);
+    const newCartArr = cartItems.filter((item) => item.id !== id);
+    setCartItems(newCartArr);
+    const total = newCartArr.reduce((sum, item) => sum + item.price, 0);
+    setTotalAmount(total);
+    localStorage.setItem("cartItems", JSON.stringify(newCartArr));
   };
 
   return (
@@ -78,7 +89,12 @@ const CartPage = () => {
                     +1
                   </Button>
                 </div>
-                <Button variant="destructive">Delete</Button>
+                <Button
+                  onClick={() => deleteItem(cartItem.id)}
+                  variant="destructive"
+                >
+                  Delete
+                </Button>
               </div>
             ))}
             <Separator />
