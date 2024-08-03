@@ -4,6 +4,7 @@ import ProductCard from "@/components/ProductCard";
 import SearchProduct from "@/components/SearchProduct";
 import { CartItem, Filters, Product } from "@/types";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const ProductPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -68,7 +69,7 @@ const ProductPage = () => {
     );
     if (isProductAlreadyInCart) {
       // product is alredy in the cart, just show alert or toast
-      alert("Product already in the cart");
+      toast.warning("Item already in cart");
       return;
     }
 

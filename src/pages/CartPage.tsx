@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CartItem } from "@/types";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -22,7 +23,7 @@ const CartPage = () => {
   const handleIncOrDec = (isInc: boolean, cartItem: CartItem) => {
     if (isInc) {
       if (cartItem.quantity === cartItem.quantityInCart) {
-        alert("Can not increase more, no further stock is available");
+        toast.warning("Can not increase more, no further stock available");
       } else {
         const cartItemsArr: CartItem[] = JSON.parse(JSON.stringify(cartItems));
         const index = cartItemsArr.findIndex((item) => item.id === cartItem.id);
@@ -31,6 +32,7 @@ const CartPage = () => {
         const total = totalAmount + cartItem.price;
         setTotalAmount(total);
         localStorage.setItem("cartItems", JSON.stringify(cartItemsArr));
+        toast.success("Item updated");
       }
     } else {
       if (cartItem.quantityInCart === 1) {
@@ -43,6 +45,7 @@ const CartPage = () => {
         const total = totalAmount - cartItem.price;
         setTotalAmount(total);
         localStorage.setItem("cartItems", JSON.stringify(cartItemsArr));
+        toast.success("Item updated");
       }
     }
   };
@@ -54,6 +57,7 @@ const CartPage = () => {
     const total = newCartArr.reduce((sum, item) => sum + item.price, 0);
     setTotalAmount(total);
     localStorage.setItem("cartItems", JSON.stringify(newCartArr));
+    toast.error("Item deleted ");
   };
 
   return (
@@ -67,7 +71,7 @@ const CartPage = () => {
             {cartItems.map((cartItem) => (
               <div
                 key={cartItem.id}
-                className=" rounded flex gap-6 bg-gray-50 p-2 shadow-md items-center "
+                className=" rounded flex gap-6 bg-gray-100 p-2 shadow-sm items-center "
               >
                 <img src={cartItem.imageURL} className=" size-32" />
                 <div className="flex-1">
